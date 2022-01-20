@@ -40,12 +40,12 @@ app.use('/api', apiRouter);
 
 app.use(express.static(path.join(__dirname, 'public/build')))
 app.use(express.static(path.join(__dirname, 'public/build1')))
-app.get('/admin', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public/build1', 'index.html'));
-});
-app.get('/admin/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public/build1', 'index.html'));
-});
+// app.get('/admin', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'public/build1', 'index.html'));
+// });
+// app.get('/admin/*', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'public/build1', 'index.html'));
+// });
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public/build', 'index.html'));
 });
@@ -59,13 +59,13 @@ const opts = {
 const log = require('simple-node-logger').createRollingFileLogger(opts);
 init = async function () {
 
-  data.connect.connect(function (err) {
-    if (err) {
-      log.info(err)
-      throw err;
-    } 
-    console.log("Connected!");
-  });
+  // data.connect.connect(function (err) {
+  //   if (err) {
+  //     log.info(err)
+  //     throw err;
+  //   } 
+  //   console.log("Connected!");
+  // });
   socketModule.socket(io);
   server.listen(port);
   
