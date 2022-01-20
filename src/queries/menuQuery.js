@@ -54,6 +54,15 @@ module.exports = {
             });
         });
     },
+       getSubMenu: async function () {
+           var query = `SELECT * FROM tb_sub_menu `
+           return new Promise((resolve, reject) => {
+               connect.connect.query(query, (err, rows) => {
+                   if (err) return reject(err);
+                   resolve(rows);
+               });
+           });
+       },
 
 
     ///////////////////////////////////////////// END ///////////////////////////////////////////////////////////////

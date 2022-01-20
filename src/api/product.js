@@ -33,6 +33,7 @@ const {
 const {
     getListLimitPage
 } = require('../commons/request');
+
 //////////////////////////////////////////////////////////// USER /////////////////////////////////
 router.post('/getProductToIdSubMenu', async function (req, res, next) {
 
@@ -59,7 +60,7 @@ router.post('/getProductToIdSubMenu', async function (req, res, next) {
         error_500(res, error)
     }
 });
-router.get('/getAllProducts', async function (req, res, next) {
+router.post('/getAllProducts', async function (req, res, next) {
 
     try {
         const {
@@ -71,7 +72,8 @@ router.get('/getAllProducts', async function (req, res, next) {
             page
         })
         if (flag.length > 0) return error_400(res, 'Not be empty', flag)
-        const package = await getListLimitPage(`tb_product`, limit, page)
+        const package = await getListLimitPage(`tb_product`, limit, page,false,true)
+        
         success(res, "getpostsToIdSubMenu success!", package)
     } catch (error) {
         console.log(error);

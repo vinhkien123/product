@@ -20,6 +20,7 @@ const customerQuery = require('../queries/customerQuery');
 const menuQuery = require('../queries/menuQuery');
 const { getSubMenuToIdArray } = require('../commons/functions/menu');
 const { getProfileUser } = require('../commons');
+const funcQuery = require('../queries/funcQuery');
 ///////////////////////// USER ////////////////////////////
 router.get('/getslider', async function (req, res, next) {
     try {
@@ -34,6 +35,14 @@ router.get('/getmenu', async function (req, res, next) {
         const data = await menuQuery.getMenu()
         success(res,"Get menu success",data)
     } catch (error) {console.log(error);}
+})
+router.get('/getsubmenuall', async function (req, res, next) {
+    try {
+        const data = await menuQuery.getSubMenu()
+        success(res, "Get menu success", data)
+    } catch (error) {
+        console.log(error);
+    }
 })
 router.post('/getsubmenu', async function (req, res, next) {
     try {

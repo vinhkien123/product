@@ -1,9 +1,15 @@
 const customerQuery = require('../queries/customerQuery')
 const jwt = require('jsonwebtoken');
 const userQuery = require('../queries/userQuery');
+const {
+    getProfileUserToIdArray
+} = require('./functions/user');
 module.exports = {
-    resListLimitPage: (array,total) => {
-        return {array,total}
+    resListLimitPage: (array, total) => {
+        return {
+            array,
+            total
+        }
     },
     convertCreated_at: (created_at) => {
         let day = created_at.getDate();
@@ -27,15 +33,24 @@ module.exports = {
             console.log(error);
         }
     },
-    convertArrayCreated_at: (array) => {
-        for (item of array) {
-            let day = item.created_at.getDate();
-            let month = item.created_at.getMonth() + 1;
-            let year = item.created_at.getFullYear();
-            var hours = item.created_at.getHours();
-            var minutes = item.created_at.getMinutes();
-            var seconds = item.created_at.getSeconds();
-            item.created_at = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
+    convertArrayCreated_at: async (array, flag) => {
+        try {
+            for await (item of array) {
+                let day = item.created_at.getDate();
+                let month = item.created_at.getMonth() + 1;
+                let year = item.created_at.getFullYear();
+                var hours = item.created_at.getHours();
+                var minutes = item.created_at.getMinutes();
+                var seconds = item.created_at.getSeconds();
+                item.created_at = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`
+                if (flag) {
+                    const arrayIdManager = JSON.parse(item.manager)
+                    const data = await getProfileUserToIdArray(arrayIdManager)
+                    item.profileManager = data
+                }
+            }
+        } catch (error) {
+            console.log(error);
         }
     },
     validationBody: (obj) => {
